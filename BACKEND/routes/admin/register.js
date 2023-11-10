@@ -1,12 +1,12 @@
-const User = require("../../models/User");
+const Admin = require("../../models/Admin");
 const bcrypt = require("bcrypt");
 
 module.exports = async (req, res) => {
-  let { userName, email, password } = req.body;
+  let { adminName, email, password } = req.body;
   try {
     //   Verify if the email is already used
-    let existedUser = await User.findOne({ email });
-    if (existedUser) {
+    let existedAdmin = await Admin.findOne({ email });
+    if (existedAdmin) {
       return res.status(401).json({
         status: false,
         message: "This email is already existed, please use another one",
@@ -22,13 +22,13 @@ module.exports = async (req, res) => {
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    // CREATE NEW USER
-    const newUser = new User({
-      userName,
+    // CREATE NEW ADMIN
+    const newAdmin = new Admin({
+      adminName,
       email,
       password: hashedPassword,
     });
-    await newUser.save();
+    await newAdmin.save();
     res.status(200).json({
       status: true,
       message: "Your account has been created successfully",
@@ -42,10 +42,10 @@ module.exports = async (req, res) => {
       return res
         .status(401)
         .json({ status: false, error: error.errors.password.message });
-    } else if (error.errors.userName) {
+    } else if (error.errors.adminName) {
       return res
         .status(401)
-        .json({ status: false, error: error.errors.userName.message });
+        .json({ status: false, error: error.errors.adminName.message });
     }
   }
 };

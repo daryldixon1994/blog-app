@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
+const adminSchema = new Schema(
   {
-    userName: {
+    adminName: {
       type: String,
-      required: [true, "This is a required field, please insert a username"],
+      required: [true, "This is a required field, please insert a adminname"],
     },
     email: {
       type: String,
@@ -23,11 +23,7 @@ const userSchema = new Schema(
         `Your password must contain 8 characters with at least one uppercase character, one lowercase character and one special character (!@#$%^&*()_+|~-)`,
       ],
     },
-    isBanned: {
-      type: Boolean,
-      default: false,
-    },
-    isUser: {
+    isAdmin: {
       type: Boolean,
       default: true,
     },
@@ -41,4 +37,4 @@ const userSchema = new Schema(
   }
 );
 
-module.exports = User = mongoose.model("User", userSchema);
+module.exports = Admin = mongoose.model("Admin", adminSchema);

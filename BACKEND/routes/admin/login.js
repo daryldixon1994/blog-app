@@ -1,4 +1,4 @@
-const User = require("../../models/User");
+const Admin = require("../../models/Admin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -6,38 +6,38 @@ module.exports = async (req, res) => {
   let KEY = process.env.KEY;
   let { email, password } = req.body;
   try {
-    let user = await User.findOne({ email });
-    if (!user) {
+    let admin = await Admin.findOne({ email });
+    if (!admin) {
       return res.status(200).json({
-        status: false,
-        error: "Wrong email or password, please check again",
+        status: true,
+        message: "Wrong email or password, please check again",
       });
     }
-    let checkPassword = await bcrypt.compare(password, user.password);
+    let checkPassword = await bcrypt.compare(password, admin.password);
 
     if (!checkPassword) {
       return res.status(200).json({
-        status: false,
-        error: "Wrong email or password, please check again",
+        status: true,
+        message: "Wrong email or password, please check again",
       });
     }
-    console.log("ok")
     let token = await jwt.sign(
       {
-        id: user.id,
-        email: user.email,
-        isUser: user.isUser,
+        id: admin.id,
+        email: admin.email,
+        isAdmin: admin.isAdmin,
       },
       KEY,
       {
         expiresIn: "1h",
       }
     );
+
     res.status(200).json({
       status: true,
       data: {
-        userId: user._id,
-        isUser: user.isUser,
+        adminId: admin._id,
+        isAdmin: admin.isAdmin,
         token,
       },
     });

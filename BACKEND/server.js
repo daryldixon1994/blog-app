@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const app = express();
 require("dotenv").config();
 
-
 //ENVIRONMENT VARIABLES
 const DB = process.env.DB;
 
@@ -17,10 +16,17 @@ mongoose
 
 //MIDDLEWARES
 app.use(express.json());
-//ROUTES
 
+//ROUTES
+app.post("/api/test", async (req, res) => {
+  console.log(req.files);
+  console.log(req.file);
+  res.json({ message: "ok" });
+});
 // user routes
 app.use("/blog/api", require("./routes/user"));
+// admin routes
+app.use("/blog/api/admin", require("./routes/admin"));
 
 app.listen(5000, (err) => {
   if (err) throw err;
