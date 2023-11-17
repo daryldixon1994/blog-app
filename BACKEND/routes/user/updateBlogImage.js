@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
     let { userId, blogId } = req.query;
     const imgBuffer = fs.readFileSync(
       path.join(
-        "D:/Dévelopement WEB/GOMYCODE Coaching/Full Stack/BLOG-APP/BACKEND/",
+        __dirname.substr(0, __dirname.length - 11),
         "uploads",
         req.file.filename
       )

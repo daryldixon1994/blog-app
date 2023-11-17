@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserPrivateNav from "../components/UserPrivateNav";
-import { Form, Button } from "semantic-ui-react";
+import { Form, Button, Icon } from "semantic-ui-react";
 import { useParams } from "react-router";
 import axios from "axios";
 import CommentsItem from "../components/CommentsItem";
@@ -62,6 +62,9 @@ function SingleBlog() {
           <p>{singleBlog?.body}</p>
           <hr />
           <div className="reactions-bloc">
+            <div className="thumb-box">
+              <Icon name="thumbs up" className="thumb" />
+            </div>
             <h6>{singleBlog?.likes.length} like(s)</h6>
             <h6> {comments?.length} comment(s) </h6>
           </div>

@@ -3,15 +3,16 @@ import { NavLink } from "react-router-dom";
 import { GrLogout } from "react-icons/gr";
 import axios from "axios";
 import "./style.css";
-function UserPrivateNav(props) {
+
+function AdminPrivateNav(props) {
   let id = localStorage.getItem("id");
   const [data, setData] = useState({});
-  useLayoutEffect(() => {
-    axios
-      .get(`/blog/api/myData?id=${id}`)
-      .then((res) => setData(res.data.data))
-      .catch((err) => console.dir(err));
-  }, []);
+  // useLayoutEffect(() => {
+  //   axios
+  //     .get(`/blog/api/myData?id=${id}`)
+  //     .then((res) => setData(res.data.data))
+  //     .catch((err) => console.dir(err));
+  // }, []);
   return (
     <div className="public-nav-container">
       <h1>
@@ -32,7 +33,7 @@ function UserPrivateNav(props) {
       <ul>
         <li>
           <NavLink
-            to={`/blogs`}
+            to={`/admin/blogs`}
             style={({ isActive }) => {
               return {
                 all: "unset",
@@ -45,10 +46,9 @@ function UserPrivateNav(props) {
             Blogs
           </NavLink>
         </li>
-
         <li>
           <NavLink
-            to={`/addBlog`}
+            to={`/admin/users`}
             style={({ isActive }) => {
               return {
                 all: "unset",
@@ -58,31 +58,8 @@ function UserPrivateNav(props) {
               };
             }}
           >
-            Add blog
+            Users
           </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to={`/myBlogs/${id}`}
-            style={({ isActive }) => {
-              return {
-                all: "unset",
-                fontWeight: isActive ? "bold" : "",
-                color: isActive ? "red" : "black",
-                cursor: "pointer",
-              };
-            }}
-          >
-            My Blogs
-          </NavLink>
-        </li>
-        <li>{data?.userName}</li>
-        <li>
-          <img
-            src={`data:image/gif;base64,${data?.imgUrl} `}
-            width="60px"
-            alt=""
-          />
         </li>
         <li>
           <NavLink
@@ -108,4 +85,4 @@ function UserPrivateNav(props) {
   );
 }
 
-export default UserPrivateNav;
+export default AdminPrivateNav;

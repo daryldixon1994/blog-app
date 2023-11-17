@@ -1,14 +1,14 @@
 const Blog = require("../../models/Blog");
 const fs = require("fs");
 const path = require("path");
-const Binary = require("mongoose").Binary
+const Binary = require("mongoose").Binary;
 module.exports = async (req, res) => {
   try {
     let { title, body, desc } = req.body;
     let { id } = req.params;
     const imgBuffer = fs.readFileSync(
       path.join(
-        "D:/Dévelopement WEB/GOMYCODE Coaching/Full Stack/BLOG-APP/BACKEND/",
+        __dirname.substr(0, __dirname.length - 11),
         "uploads",
         req.file.filename
       )
@@ -22,7 +22,9 @@ module.exports = async (req, res) => {
       imgUrl: base64Image,
     });
     await newBlog.save();
-    res.status(200).json({ status: true, message: "Your blog was added successfully" });
+    res
+      .status(200)
+      .json({ status: true, message: "Your blog was added successfully" });
   } catch (error) {
     if (error) throw error;
     res.status(401).json({ status: false, error });

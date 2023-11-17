@@ -7,11 +7,12 @@ const route = express.Router();
 // Login router : /blog/api/admin/login
 route.post("/login", require("./login"));
 
-// Get reported blogs : /blog/api/admin/reportedBlogs
-route.get("/reportedBlogs", require("./getReportedBlogs"));
-
 // Get blogs : /blog/api/admin/blogs
 route.get("/blogs", require("./getBlogs"));
+
+
+// Get reported blogs : /blog/api/admin/reportedBlogs
+route.get("/reportedBlogs", require("./getReportedBlogs"));
 
 // Get comments : /blog/api/admin/getComments
 route.get("/getComments", require("./getComments"));

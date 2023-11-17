@@ -3,7 +3,8 @@ import { Navigate } from "react-router";
 function PrivateRoute(props) {
   let token = localStorage.getItem("token");
   let isUser = localStorage.getItem("isUser");
-  if (token && isUser) {
+  let isBanned = localStorage.getItem("isBanned");
+  if (token && isUser==="true" && isBanned === "false") {
     return <>{props.children}</>;
   } else {
     return <Navigate to="/login" />;

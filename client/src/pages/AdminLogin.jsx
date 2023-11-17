@@ -6,28 +6,24 @@ import { useNavigate } from "react-router";
 
 import "./style.css";
 function Login() {
-  const [userData, setUserData] = useState({});
+  const [adminData, setAdminData] = useState({});
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [errorLogin, setErrorLogin] = useState();
-  const [bannedMsg, setBannedMsg] = useState();
   const navigate = useNavigate();
 
   const handleLogin = () => {
     setLoading(true);
     axios
-      .post("/blog/api/login", userData)
+      .post("/blog/api/admin/login", adminData)
       .then((res) => {
         setLoading(false);
-        if (res.data.data.isBanned) {
-          return setBannedMsg("You are banned for 7 days");
-        } else if (res.data.status) {
+        if (res.data.status) {
           localStorage.setItem("token", res.data.data.token);
-          localStorage.setItem("id", res.data.data.userId);
-          localStorage.setItem("isUser", res.data.data.isUser);
-          localStorage.setItem("isBanned", res.data.data.isBanned);
-          navigate(`/blogs`);
+          localStorage.setItem("adminId", res.data.data.adminId);
+          localStorage.setItem("isAdmin", res.data.data.isAdmin);
+          navigate(`/admin`);
         } else {
           setErrorLogin(res.data.error);
         }
@@ -43,15 +39,15 @@ function Login() {
     <div className="register-container">
       <PublicNavbar />
       <div className="register-subcontainer">
-        <h1>Login to your account</h1>
+        <h1>Login as an admin</h1>
         <Form className="register-form">
           <Form.Field>
             {/* <label>Last Name</label> */}
             <input
               type="email"
-              placeholder="Email"
+              placeholder="Admin Email"
               onChange={(e) => {
-                setUserData({ ...userData, email: e.target.value });
+                setAdminData({ ...adminData, email: e.target.value });
               }}
             />
           </Form.Field>
@@ -61,7 +57,7 @@ function Login() {
               type={show ? "text" : "password"}
               placeholder="Password"
               onChange={(e) => {
-                setUserData({ ...userData, password: e.target.value });
+                setAdminData({ ...adminData, password: e.target.value });
               }}
             />
           </Form.Field>
@@ -83,12 +79,6 @@ function Login() {
             <Message negative>
               <Message.Header>Error</Message.Header>
               <p>{errorLogin}</p>
-            </Message>
-          )}
-          {bannedMsg && (
-            <Message negative>
-              <Message.Header>Error</Message.Header>
-              <p>{bannedMsg}</p>
             </Message>
           )}
 
